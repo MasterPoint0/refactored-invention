@@ -1,0 +1,36 @@
+{
+  "name": "infinitepoint",
+  "version": "0.0.1",
+  "description": "a discord bot application made with discord.js api",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node main"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MasterPoint0/refactored-invention.git"
+  },
+  "keywords": [
+    "github",
+    "discordapi",
+    "discord.js",
+    "discordbot",
+    "galaxytechnician",
+    "infinitepoint"
+  ],
+  "author": "GalaxyTechnician",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MasterPoint0/refactored-invention/issues"
+  },
+  "homepage": "https://github.com/MasterPoint0/refactored-invention#readme",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "discord.js": "^14.6.0",
+    "dotenv": "^16.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^8.28.0"
+  }
+}
