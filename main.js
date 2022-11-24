@@ -3,7 +3,7 @@ require('colors');
 
 const { Client, Events, IntentsBitField, Partials } = require('discord.js');
 
-const ClientToken = "MTA0NDk1NTU5MTA0NDUwMTUwNA.GJBviA.oUUrch2-zD04tSrOAnyrE8wRJ1IqXram3K2SlU";
+const ClientToken = process.env['token'];
 
 try {
 
