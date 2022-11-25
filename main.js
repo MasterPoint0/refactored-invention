@@ -1,6 +1,8 @@
 require('dotenv').config();
 require('colors');
 
+const keep_Alive = require('./server.js');
+
 const { Client, Events, IntentsBitField, Partials } = require('discord.js');
 
 const ClientToken = process.env['token'];
@@ -27,6 +29,7 @@ try {
             _run('deploy-status.js');
             _run('slash.js');
             _run('deploy-slash.js');
+            _run('event-handling.js')
         } else return;
     })(true);
 
@@ -34,3 +37,5 @@ try {
 } catch (error) {
     if (error) return console.error(error);
 };
+
+keep_Alive();
