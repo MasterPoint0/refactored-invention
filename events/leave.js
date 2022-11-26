@@ -10,9 +10,9 @@ welcomeCanvas.context = welcomeCanvas.create.getContext('2d');
 welcomeCanvas.context.font = '72px sans-serif';
 welcomeCanvas.context.fillStyle = '#ffffff';
 
-Canvas.loadImage('./bg2.png').then(async (img) => {
+Canvas.loadImage('./bg2.jpg').then(async (img) => {
   welcomeCanvas.context.drawImage(img, 0, 0, 1024, 500);
-  welcomeCanvas.context.fillText('Goodbye', 360, 360);
+  welcomeCanvas.context.fillText('Welcome', 360, 360);
   welcomeCanvas.context.beginPath()
   welcomeCanvas.context.arc(512, 166, 128, 0, Math.PI * 2, true)
   welcomeCanvas.context.stroke()
@@ -23,6 +23,14 @@ module.exports = {
   name: Events.GuildMemberRemove,
   async execute(client, member) {
     if (member.guild.id !== '1040933171019128914') return;
+
+    const PublicDatabase = require('@replit/database');
+    const FetchData = new PublicDatabase();
+
+    let PublicUserStatus = await FetchData.get(`userstatus_${member.id}`);
+    let PublicUserJoined = await FetchData.get(`userjoined_${member.id}`);
+
+    if (PublicUserStatus == null) PublicUserStatus = 1;
     
     let canvas = welcomeCanvas;
     canvas.context.font = '42px sans-serif';
@@ -46,8 +54,8 @@ module.exports = {
         embeds: [
           {
             color: Math.floor(Math.random() * 1000000),
-            title: `Goodbye ${member.user.username}!`,
-            description: `**${member.user.username}** leave the server.`,
+            title: `Bye-bye ${member.user.username}!`,
+            description: `:wave:Goodbye **${member.guild.name}**`,
             thumbnail: {
               url: member.user.displayAvatarURL({ extension: 'png', size: 1024 })
             },
@@ -58,10 +66,12 @@ module.exports = {
           }
         ],
         files: [atta]
-      });
+      }).catch(() => null);
+
+      await FetchData.set(`userjoined_${member.id}`, false);
       
     } catch (error) {
-      console.log(error);
+      member.kick().catch(() => null);
     }
   }
 }

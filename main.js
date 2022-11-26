@@ -13,7 +13,7 @@ try {
         intents: [IntentsBitField.Flags.Guilds, IntentsBitField.Flags.GuildMembers],
         partials: [Partials.Guilds, Partials.Message, Partials.Reaction],
         shards: 'auto',
-        allowedMentions: false
+        allowedMentions: { parse: ['users', 'roles'] }
     });
 
     client.on(Events.ClientReady, function() {

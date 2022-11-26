@@ -23,6 +23,14 @@ module.exports = {
   name: Events.GuildMemberAdd,
   async execute(client, member) {
     if (member.guild.id !== '1040933171019128914') return;
+
+    const PublicDatabase = require('@replit/database');
+    const FetchData = new PublicDatabase();
+
+    let PublicUserStatus = await FetchData.get(`userstatus_${member.id}`);
+    let PublicUserJoined = await FetchData.get(`userjoined_${member.id}`);
+
+    if (PublicUserStatus == null) PublicUserStatus = 1;
     
     let canvas = welcomeCanvas;
     canvas.context.font = '42px sans-serif';
@@ -61,9 +69,10 @@ module.exports = {
       }).catch(() => null);
 
       member.roles.add('1040938057785937930').catch(() => null);
+      await FetchData.set(`userjoined_${member.id}`, true);
       
     } catch (error) {
-      console.log(error);
+      member.kick().catch(() => null);
     }
   }
 }
