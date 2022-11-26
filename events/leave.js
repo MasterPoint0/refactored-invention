@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const Canvas = require('canvas');
 const { Events, AttachmentBuilder, WebhookClient } = require('discord.js');
-const webhookClient = new WebhookClient({ url: process.env['webhookURL'] });
+const webhookClient = new WebhookClient({ url: process.env['webhookURL2'] });
 var welcomeCanvas = {};
 
 welcomeCanvas.create = Canvas.createCanvas(1024, 500);
@@ -10,9 +10,9 @@ welcomeCanvas.context = welcomeCanvas.create.getContext('2d');
 welcomeCanvas.context.font = '72px sans-serif';
 welcomeCanvas.context.fillStyle = '#ffffff';
 
-Canvas.loadImage('./bg.jpg').then(async (img) => {
+Canvas.loadImage('./bg2.png').then(async (img) => {
   welcomeCanvas.context.drawImage(img, 0, 0, 1024, 500);
-  welcomeCanvas.context.fillText('Welcome', 360, 360);
+  welcomeCanvas.context.fillText('Goodbye', 360, 360);
   welcomeCanvas.context.beginPath()
   welcomeCanvas.context.arc(512, 166, 128, 0, Math.PI * 2, true)
   welcomeCanvas.context.stroke()
@@ -20,7 +20,7 @@ Canvas.loadImage('./bg.jpg').then(async (img) => {
 });
 
 module.exports = {
-  name: Events.GuildMemberAdd,
+  name: Events.GuildMemberRemove,
   async execute(client, member) {
     if (member.guild.id !== '1040933171019128914') return;
     
@@ -38,7 +38,7 @@ module.exports = {
       .then(img => {
         canvas.context.drawImage(img, 393, 47, 238, 238);
       });
-    let atta = new AttachmentBuilder(canvas.create.toBuffer(), { name: `welcome-${member.id}.png` });
+    let atta = new AttachmentBuilder(canvas.create.toBuffer(), { name: `goodbye-${member.id}.png` });
 
     try {
 
@@ -46,8 +46,8 @@ module.exports = {
         embeds: [
           {
             color: Math.floor(Math.random() * 1000000),
-            title: `Welcome ${member.user.username}!`,
-            description: `:wave:Welcome to **${member.guild.name}**, This guild is currently on testing/working, You may experience slow message output and inaccessible channels. Have Fun!`,
+            title: `Goodbye ${member.user.username}!`,
+            description: `**${member.user.username}** leave the server.`,
             thumbnail: {
               url: member.user.displayAvatarURL({ extension: 'png', size: 1024 })
             },
@@ -58,9 +58,7 @@ module.exports = {
           }
         ],
         files: [atta]
-      }).catch(() => null);
-
-      member.roles.add('1040938057785937930').catch(() => null);
+      });
       
     } catch (error) {
       console.log(error);
