@@ -1,17 +1,17 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 
-const { PermissionFlagsBits, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { PermissionFlagsBits, ActionRowBuilder, ButtonBuilder, ButtonStyle, WebhookClient } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName("code")
+        .setName("sendbit1-reason")
         .setDescription("Sends a custom coded command!")
         .setDMPermission(false)
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator | PermissionFlagsBits.ManageGuild),
     async execute(client, interaction) {
       const webhookClient = new WebhookClient({ url: process.env['webhookURL4'] });
 
-      webhookClient.send({
+      interaction.reply({
         content: `Hey **user**! You discovered this secret server? Well I think this won't happened if you a spent a lot of time reading the rules, **Because of this I'll give you a reward, Click/PUSH** the button below to earn your reward.`,
         embeds: [
           {
